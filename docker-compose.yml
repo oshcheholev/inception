@@ -1,0 +1,67 @@
+services:
+
+        mariadb:
+                build: requirements/mariadb
+                container_name: mariadb
+                env_file: .env
+                volumes:
+                        - mariadb_data:/var/lib/mysql
+                # networks:
+                #         - inception
+                restart: unless-stopped
+                healthcheck:
+                        test: ["CMD", "sh", "-c", "mysql -h mariadb -u\"$$MYSQL_USER\" -p\"$$MYSQL_PASSWORD\" -D \"$$MYSQL_DATABASE\" -e 'SELECT 1' >/dev/null 2>&1 || exit 1"]
+                        interval: 5s
+                        timeout: 3s
+                        retries: 12
+
+        # wordpress:
+        #         build: requirements/wordpress
+        #         container_name: wordpress
+        #         depends_on:
+        #                 mariadb:
+        #                         condition: service_healthy
+        #         env_file: .env
+        #         volumes:
+        #                 - wordpress_data:/var/www/html
+        #         networks:
+        #                 - inception
+        #         restart: unless-stopped
+        #         healthcheck:
+        #                 test: ["CMD", "sh", "-c", "nc -z localhost $${PHP_PORT:-9000} || exit 1"]
+        #                 interval: 5s
+        #                 timeout: 3s
+        #                 retries: 12
+
+        # nginx:
+        #         build: requirements/nginx
+        #         container_name: nginx
+        #         env_file: .env
+        #         depends_on:
+        #                 wordpress:
+        #                         condition: service_healthy
+        #         ports:
+        #                 - "443:443"
+        #         volumes:
+        #                 - wordpress_data:/var/www/html
+        #         networks:
+        #                 - inception
+        #         restart: unless-stopped
+
+volumes:
+        mariadb_data:
+                driver: local
+                driver_opts:
+                        type: none
+                        device: ${HOME}/data/mariadb
+                        o: bind
+#         wordpress_data:
+#                 driver: local
+#                 driver_opts:
+#                         type: none
+#                         device: ${HOME}/data/wordpress
+#                         o: bind
+
+# networks:
+#         inception:
+#                 driver: bridge

@@ -1,16 +1,16 @@
 services:
 
         mariadb:
-                build: requirements/mariadb
+                build: ./srcs/requirements/mariadb
                 container_name: mariadb
-                env_file: .env
+                env_file: ./srcs/requirements/mariadb/.env
                 volumes:
                         - mariadb_data:/var/lib/mysql
                 # networks:
                 #         - inception
                 restart: unless-stopped
                 healthcheck:
-                        test: ["CMD", "sh", "-c", "mysql -h mariadb -u\"$$MYSQL_USER\" -p\"$$MYSQL_PASSWORD\" -D \"$$MYSQL_DATABASE\" -e 'SELECT 1' >/dev/null 2>&1 || exit 1"]
+                        test: ["CMD", "sh", "-c", "mysql -h localhost -u\"$$MYSQL_USER\" -p\"$$MYSQL_PASSWORD\" -D \"$$MYSQL_DATABASE\" -e 'SELECT 1' >/dev/null 2>&1 || exit 1"]
                         interval: 5s
                         timeout: 3s
                         retries: 12
@@ -53,13 +53,13 @@ volumes:
                 driver: local
                 driver_opts:
                         type: none
-                        device: ${HOME}/data/mariadb
+                        device: ${HOME:-${USERPROFILE}}/data/mariadb
                         o: bind
 #         wordpress_data:
 #                 driver: local
 #                 driver_opts:
 #                         type: none
-#                         device: ${HOME}/data/wordpress
+#                         device: ${HOME:-${USERPROFILE}}/data/wordpress
 #                         o: bind
 
 # networks:

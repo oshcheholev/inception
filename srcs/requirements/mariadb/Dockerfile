@@ -13,6 +13,9 @@ COPY conf/server.conf /etc/mysql/mariadb.conf.d/server.conf
 COPY tools/script.sh /script.sh
 RUN chmod +x /script.sh
 
+# Copy init SQL referenced by the MariaDB configuration
+COPY tools/init.sql /var/lib/mysql/init.sql
+
 RUN mkdir -p /run/mysqld && chown mysql:mysql /run/mysqld
 
 # Expose port 3306

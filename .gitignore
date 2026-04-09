@@ -1,0 +1,8 @@
+# Docker runtime data
+/data/
+
+# Generated secrets / certificates
+/secrets/*
+
+# Logs
+*.log

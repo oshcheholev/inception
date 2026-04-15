@@ -5,17 +5,17 @@ set -e
 chown -R mysql:mysql /var/lib/mysql /run/mysqld
 
 if [ ! -d /var/lib/mysql/mysql ]; then
-    mariadb-install-db --user=mysql --datadir=/var/lib/mysql --auth-root-authentication-method=normal --skip-test-db >/dev/null
+	mariadb-install-db --user=mysql --datadir=/var/lib/mysql --auth-root-authentication-method=normal --skip-test-db >/dev/null
 fi
 
-mysqld_safe --user=mysql --datadir=/var/lib/mysql --socket=/run/mysqld/mysqld.sock --bind-address=0.0.0.0 &
+mysqld_safe --user=mysql --datadir=/var/lib/mysql --socket=/run/mysqld/mysqld.sock &
 server_pid=$!
 
-until mysqladmin ping -u root -p"${MYSQL_ROOT_PASSWORD}" --silent >/dev/null 2>&1; do
-    sleep 1
+until mysqladmin ping -u root --silent >/dev/null 2>&1; do
+	sleep 1
 done
 
-mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<EOF
+mysql -u root <<EOF
 CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};
 
 CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';

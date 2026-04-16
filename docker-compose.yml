@@ -15,38 +15,38 @@ services:
                         timeout: 3s
                         retries: 12
 
-        # wordpress:
-        #         build: requirements/wordpress
-        #         container_name: wordpress
-        #         depends_on:
-        #                 mariadb:
-        #                         condition: service_healthy
-        #         env_file: .env
-        #         volumes:
-        #                 - wordpress_data:/var/www/html
-        #         networks:
-        #                 - inception
-        #         restart: unless-stopped
-        #         healthcheck:
-        #                 test: ["CMD", "sh", "-c", "nc -z localhost $${PHP_PORT:-9000} || exit 1"]
-        #                 interval: 5s
-        #                 timeout: 3s
-        #                 retries: 12
+        wordpress:
+                build: requirements/wordpress
+                container_name: wordpress
+                depends_on:
+                        mariadb:
+                                condition: service_healthy
+                env_file: .env
+                volumes:
+                        - wordpress_data:/var/www/html
+                networks:
+                        - inception
+                restart: unless-stopped
+                healthcheck:
+                        test: ["CMD", "sh", "-c", "nc -z localhost $${PHP_PORT:-9000} || exit 1"]
+                        interval: 5s
+                        timeout: 3s
+                        retries: 12
 
-        # nginx:
-        #         build: requirements/nginx
-        #         container_name: nginx
-        #         env_file: .env
-        #         depends_on:
-        #                 wordpress:
-        #                         condition: service_healthy
-        #         ports:
-        #                 - "443:443"
-        #         volumes:
-        #                 - wordpress_data:/var/www/html
-        #         networks:
-        #                 - inception
-        #         restart: unless-stopped
+        nginx:
+                build: requirements/nginx
+                container_name: nginx
+                env_file: .env
+                depends_on:
+                        wordpress:
+                                condition: service_healthy
+                ports:
+                        - "443:443"
+                volumes:
+                        - wordpress_data:/var/www/html
+                networks:
+                        - inception
+                restart: unless-stopped
 
 volumes:
         mariadb_data:
@@ -55,13 +55,13 @@ volumes:
                         type: none
                         device: ${HOME:-${USERPROFILE}}/data/mariadb
                         o: bind
-#         wordpress_data:
-#                 driver: local
-#                 driver_opts:
-#                         type: none
-#                         device: ${HOME:-${USERPROFILE}}/data/wordpress
-#                         o: bind
+        wordpress_data:
+                driver: local
+                driver_opts:
+                        type: none
+                        device: ${HOME:-${USERPROFILE}}/data/wordpress
+                        o: bind
 
-# networks:
-#         inception:
-#                 driver: bridge
+networks:
+        inception:
+                driver: bridge

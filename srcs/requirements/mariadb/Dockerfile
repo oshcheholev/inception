@@ -14,7 +14,7 @@ COPY tools/script.sh /script.sh
 RUN chmod +x /script.sh
 
 # Copy init SQL referenced by the MariaDB configuration
-COPY tools/init.sql /var/lib/mysql/init.sql
+# COPY tools/init.sql /var/lib/mysql/init.sql
 
 RUN install -d -m 755 -o mysql -g mysql /run/mysqld
 

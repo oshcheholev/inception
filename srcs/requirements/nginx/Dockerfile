@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# создаём SSL сертификат
+# create SSL directory and self-signed certificate
 RUN mkdir -p /etc/nginx/ssl
 
 RUN openssl req -x509 -nodes -days 365 \

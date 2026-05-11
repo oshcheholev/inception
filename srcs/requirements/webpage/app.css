@@ -1,0 +1,32 @@
+body {
+  background: #0b0f14;
+  color: #e6e6e6;
+  font-family: Arial;
+}
+
+.dashboard {
+  padding: 20px;
+}
+
+.grid {
+  display: grid;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.ok {
+  background: #1e2a1e;
+  padding: 15px;
+  border-bottom: 5px solid #2ecc71;
+}
+
+.bad {
+  background: #2a1e1e;
+  padding: 15px;
+  border-bottom: 5px solid #e74c3c;
+}
+
+.timestamp {
+  margin-top: 20px;
+  opacity: 0.6;
+}

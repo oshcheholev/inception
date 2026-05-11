@@ -8,7 +8,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - wordpress_data:/var/www/html
+      - wordpress:/var/www/html
     restart: unless-stopped
     networks:
       - inception_network
@@ -21,7 +21,8 @@ services:
     depends_on:
       - mariadb
     volumes:
-      - wordpress_data:/var/www/html
+      - wordpress:/var/www/html
+      - ../secrets:/var/secrets:ro
     restart: unless-stopped
     networks:
       - inception_network
@@ -32,26 +33,34 @@ services:
     build: ./requirements/mariadb
     container_name: mariadb
     volumes:
-      - mariadb_data:/var/lib/mysql
+      - mariadb:/var/lib/mysql
+      - ../secrets:/var/secrets:ro
     restart: unless-stopped
     networks:
       - inception_network
     env_file:
-      - requirements/mariadb/.env
+      - .env
+
+# volumes:
 
 volumes:
-  wordpress_data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ${HOME:-${USER}}/data/wordpress
-  mariadb_data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ${HOME:-${USER}}/data/mariadb
+  mariadb:
+    name: mariadb
+
+  wordpress:
+    name: wordpress
+  # wordpress:
+  #   driver: local
+  #   driver_opts:
+  #     type: none
+  #     o: bind
+  #     device: ${HOME:-${USER}}/data/wordpress
+  # mariadb:
+  #   driver: local
+  #   driver_opts:
+  #     type: none
+  #     o: bind
+  #     device: ${HOME:-${USER}}/data/mariadb
 
 # networks:
 networks:

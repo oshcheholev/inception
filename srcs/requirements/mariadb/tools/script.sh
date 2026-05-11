@@ -2,28 +2,37 @@
 
 set -e
 
-chown -R mysql:mysql /var/lib/mysql /run/mysqld
+
+MYSQL_PASSWORD="$(cat "$MYSQL_PASSWORD_FILE")"
+MYSQL_ROOT_PASSWORD="$(cat "$MYSQL_ROOT_PASSWORD_FILE")"
+
+mkdir -p /var/lib/mysql
+install -d -m 755 -o mysql -g mysql /run/mysqld
+chown -R mysql:mysql /var/lib/mysql
+
 
 if [ ! -d /var/lib/mysql/mysql ]; then
+    echo "Initializing MariaDB data directory..."
     mariadb-install-db --user=mysql --datadir=/var/lib/mysql --auth-root-authentication-method=normal --skip-test-db >/dev/null
 fi
 
-# Create initialization SQL
-cat <<EOF > /tmp/init.sql
-USE mysql;
-FLUSH PRIVILEGES;
+echo "Starting temporary MariaDB server for initialization..."
+mysqld_safe --user=mysql --datadir=/var/lib/mysql --skip-networking >/dev/null 2>&1 &
+pid="${!}"
 
-DELETE FROM mysql.user WHERE User='';
-DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
+until mysqladmin ping --silent; do
+    sleep 1
+done
 
-ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';
-
+echo "Creating database and user if needed..."
+mysql -u root <<EOF
 CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};
 CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
 GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%';
-
 FLUSH PRIVILEGES;
 EOF
 
-# Start MariaDB with init file
-exec mysqld_safe --user=mysql --datadir=/var/lib/mysql --init-file=/tmp/init.sql --socket=/run/mysqld/mysqld.sock --bind-address=0.0.0.0
+mysqladmin shutdown
+wait "$pid"
+
+exec mysqld_safe --user=mysql --datadir=/var/lib/mysql --bind-address=0.0.0.0

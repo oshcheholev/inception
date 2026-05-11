@@ -1,7 +1,10 @@
 COMPOSE_FILE = srcs/docker-compose.yml
+BONUS_COMPOSE_FILE = srcs/docker-compose.bonus.yml
 DATA_DIR = /home/$(USER)/data
 
 all: build up
+BONUS = -f $(COMPOSE_FILE) -f $(BONUS_COMPOSE_FILE)
+
 
 build:
 	@mkdir -p $(DATA_DIR)/wordpress $(DATA_DIR)/mariadb
@@ -10,11 +13,14 @@ build:
 up:
 	@docker compose -f $(COMPOSE_FILE) up -d
 
+bonus:
+	@docker compose -f $(COMPOSE_FILE) -f $(BONUS_COMPOSE_FILE) up --build -d
+
 down:
-	@docker compose -f $(COMPOSE_FILE) down
+	@docker compose -f $(COMPOSE_FILE) -f $(BONUS_COMPOSE_FILE) down
 
 clean: down
-	@docker compose -f $(COMPOSE_FILE) down --volumes --remove-orphans
+	@docker compose -f $(COMPOSE_FILE) -f $(BONUS_COMPOSE_FILE) down --volumes --remove-orphans
 	@docker system prune -af
 
 fclean: clean
@@ -24,9 +30,9 @@ fclean: clean
 re: fclean all
 
 logs:
-	@docker compose -f $(COMPOSE_FILE) logs -f
+	@docker compose -f $(COMPOSE_FILE) -f $(BONUS_COMPOSE_FILE) logs -f
 
 status:
-	@docker compose -f $(COMPOSE_FILE) ps
+	@docker compose -f $(COMPOSE_FILE) -f $(BONUS_COMPOSE_FILE) ps
 
-.PHONY: all build up down clean fclean re logs status
+.PHONY: all build up bonus down clean fclean re logs status

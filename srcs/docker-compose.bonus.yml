@@ -1,0 +1,54 @@
+services:
+  ftp:
+    build: ./requirements/ftp
+    container_name: ftp
+    ports:
+      - "${FTP_PORT}:${FTP_PORT}"
+      - "30000-30009:30000-30009"
+    env_file:
+      - .env
+    volumes:
+      - wordpress:/var/www/html
+      - ../secrets:/run/secrets:ro
+    networks:
+      - inception_network
+
+  wordpress:
+    environment:
+      REDIS_ENABLED: "true"
+  redis:
+    build: ./requirements/redis
+    container_name: redis
+    restart: always
+    networks:
+      - inception_network
+  adminer:
+    build: ./requirements/adminer
+    container_name: adminer
+    ports:
+      - "8080:80"
+    networks:
+      - inception_network
+  webpage:
+    build: ./requirements/webpage
+    container_name: webpage
+    ports:
+      - "8001:8000"
+    networks:
+    - inception_network
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    restart: unless-stopped
+
+    ports:
+      - "8081:8080"
+
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+
+    networks:
+      - inception_network

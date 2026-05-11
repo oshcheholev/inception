@@ -4,10 +4,10 @@ RUN apt update && apt install -y \
 	php7.4-fpm \
 	php7.4-mysqli \
 	php7.4-redis \
-	curl \
 	redis-tools \
 	mariadb-client \
 	ftp \
+	curl \
 	&& rm -rf /var/lib/apt/lists/*
 
 # Install PHP CLI for WP-CLI and other CLI tools

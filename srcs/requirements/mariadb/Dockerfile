@@ -16,7 +16,7 @@ RUN chmod +x /script.sh
 # Copy init SQL referenced by the MariaDB configuration
 COPY tools/init.sql /var/lib/mysql/init.sql
 
-RUN mkdir -p /run/mysqld && chown mysql:mysql /run/mysqld
+RUN install -d -m 755 -o mysql -g mysql /run/mysqld
 
 # Expose port 3306
 EXPOSE 3306

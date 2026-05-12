@@ -107,6 +107,9 @@ Bind mounts depend on the host filesystem and are avoided in this project.
 │       ├── adminer/
 │       ├── webpage/
 │       └── cadvisor/
+
+```
+
 # Services
 
 ## NGINX
@@ -381,46 +384,50 @@ Container metrics dashboard showing CPU, memory, and network usage.
 - Sensitive information is stored using Docker secrets
 - Each service runs in a separate container for isolation
 - To connect to db run
-    - docker exec -it mariadb bash
-    then
-    - mariadb -u root -p
+```bash
+   docker exec -it mariadb bash
+```
 
+   - then
+```bash
+   mariadb -u root -p
+```
+---
 
 # Main Concepts Learned
-Docker image creation
-Docker Compose orchestration
-service isolation
-reverse proxy architecture
-SSL/TLS configuration
-container networking
-persistent storage
-infrastructure monitoring
-Redis caching
-basic DevOps practices
+- Docker image creation
+- Docker Compose orchestration
+- service isolation
+- reverse proxy architecture
+- SSL/TLS configuration
+- container networking
+- persistent storage
+- infrastructure monitoring
+- Redis caching
+- basic DevOps practices
 
 # Resources
-Documentation
-Docker documentation
-Docker Compose documentation
-NGINX documentation
-MariaDB documentation
-WordPress documentation
-Redis documentation
-Flask documentation
-cAdvisor documentation
-Tutorials and References
-DigitalOcean Docker tutorials
-Medium articles about Docker networking
-Redis + WordPress setup guides
-LinuxServer Docker examples
-AI Usage
+## Documentation
+- Docker documentation
+- Docker Compose documentation
+- NGINX documentation
+- MariaDB documentation
+- WordPress documentation
+- Additional services documentation
+## Tutorials and References
+- DigitalOcean Docker tutorials
+- Medium articles about Docker networking
+- WordPress + Mysql + Nginx setup guides
+- LinuxServer Docker examples
 
-# AI tools were mainly used for:
+# AI Usage
 
-understanding Docker networking concepts
-debugging container issues
-researching Redis and monitoring setup
-improving infrastructure design ideas
-structuring Readme.md
+## AI tools were mainly used for:
 
-All implementation details, debugging, configuration, integration and testing were done manually.
+- understanding Docker networking concepts
+- debugging container issues
+- researching Redis and monitoring setup
+- improving infrastructure design ideas
+- structuring Readme.md
+
+All implementation, debugging, configuration, integration and testing were done manually.

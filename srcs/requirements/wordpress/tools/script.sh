@@ -52,13 +52,14 @@ fi
 wp option update home "${WP_URL}" --allow-root
 wp option update siteurl "${WP_URL}" --allow-root
 
-    if ! wp user get "${WP_USER2}" --allow-root >/dev/null 2>&1; then
-        echo "Creating additional WordPress user: $WP_USER2"
-        wp user create "${WP_USER2}" "${WP_USER2_EMAIL}" \
-            --user_pass="${WP_USER2_PASS}" \
-            --role="${WP_USER2_ROLE}" \
-            --allow-root
-    fi
+# Create additional user if needed
+if ! wp user get "${WP_USER2}" --allow-root >/dev/null 2>&1; then
+    echo "Creating additional WordPress user: $WP_USER2"
+    wp user create "${WP_USER2}" "${WP_USER2_EMAIL}" \
+        --user_pass="${WP_USER2_PASS}" \
+        --role="${WP_USER2_ROLE}" \
+        --allow-root
+fi
 
 ## --- simple content ---
 if ! wp post list --post_type=post --title="Hello from Inception!" --field=ID --allow-root | grep -q .; then

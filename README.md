@@ -346,6 +346,10 @@ http://oshcheho.42.fr:8080
 ```
 
 Web interface for managing the MariaDB database.
+- Server - Mariadb
+- Username - .env -> DB_USER
+- Password - secrets - db.password.txt
+- Database - wordpress
 
 ---
 
@@ -376,6 +380,10 @@ Container metrics dashboard showing CPU, memory, and network usage.
 - Persistent data is stored using Docker volumes
 - Sensitive information is stored using Docker secrets
 - Each service runs in a separate container for isolation
+- To connect to db run
+    - docker exec -it mariadb bash
+    then
+    - mariadb -u root -p
 
 
 # Main Concepts Learned
@@ -389,7 +397,8 @@ persistent storage
 infrastructure monitoring
 Redis caching
 basic DevOps practices
-Resources
+
+# Resources
 Documentation
 Docker documentation
 Docker Compose documentation

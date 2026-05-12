@@ -2,6 +2,7 @@ services:
   ftp:
     build: ./requirements/ftp
     container_name: ftp
+    restart: always
     ports:
       - "${FTP_PORT}:${FTP_PORT}"
       - "30000-30009:30000-30009"
@@ -25,6 +26,7 @@ services:
   adminer:
     build: ./requirements/adminer
     container_name: adminer
+    restart: always
     ports:
       - "8080:80"
     networks:
@@ -32,6 +34,7 @@ services:
   webpage:
     build: ./requirements/webpage
     container_name: webpage
+    restart: always
     ports:
       - "8001:8000"
     networks:

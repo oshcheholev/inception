@@ -51,75 +51,144 @@ HTML = """
 
     <meta http-equiv="refresh" content="5">
 
-    <style>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        padding: 40px;
+        min-height: 100vh;
+        background:
+            radial-gradient(circle at top left, #1f2a44 0%, transparent 30%),
+            radial-gradient(circle at bottom right, #14213d 0%, transparent 35%),
+            linear-gradient(135deg, #090b10, #111827);
+        color: #f1f5f9;
+        font-family: "Inter", "Segoe UI", sans-serif;
+    }
+
+    h1 {
+        font-size: 42px;
+        margin-bottom: 12px;
+        background: linear-gradient(90deg, #4cc9f0, #7b61ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: 1px;
+    }
+
+    .info {
+        margin-bottom: 40px;
+        color: #94a3b8;
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+    }
+
+    .card {
+        position: relative;
+        overflow: hidden;
+        background: rgba(22, 27, 34, 0.75);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 2px;
+        padding: 24px;
+        backdrop-filter: blur(12px);
+        transition:
+            transform 0.25s ease,
+            box-shadow 0.25s ease,
+            border-color 0.25s ease;
+        box-shadow:
+            0 10px 25px rgba(0, 0, 0, 0.25),
+            inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            135deg,
+            rgba(255,255,255,0.08),
+            transparent 40%
+        );
+        pointer-events: none;
+    }
+
+    .card:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow:
+            0 20px 40px rgba(0, 0, 0, 0.45),
+            0 0 20px rgba(76, 201, 240, 0.15);
+    }
+
+    .ok {
+        border-left: 5px solid #22c55e;
+    }
+
+    .bad {
+        border-left: 5px solid #ef4444;
+    }
+
+    .service {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 12px;
+    }
+
+    .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 16px;
+        padding: 8px 14px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.06);
+        margin-bottom: 14px;
+    }
+
+    # .ok .status::before {
+    #     content: "●";
+    #     color: #22c55e;
+    # }
+
+    # .bad .status::before {
+    #     content: "●";
+    #     color: #ef4444;
+    # }
+
+    a {
+        color: #67e8f9;
+        text-decoration: none;
+        transition: 0.2s;
+    }
+
+    a:hover {
+        color: #a5f3fc;
+        text-shadow: 0 0 12px rgba(103, 232, 249, 0.6);
+    }
+
+    .footer {
+        margin-top: 50px;
+        color: #64748b;
+        font-size: 14px;
+        text-align: center;
+    }
+
+    @media (max-width: 768px) {
         body {
-            margin: 0;
-            padding: 30px;
-            background: #0b0f14;
-            color: #e6e6e6;
-            font-family: Arial, sans-serif;
+            padding: 24px;
         }
 
         h1 {
-            color: #4cc9f0;
-            margin-bottom: 10px;
+            font-size: 32px;
         }
-
-        .info {
-            margin-bottom: 30px;
-            opacity: 0.8;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: #161b22;
-            border-radius: 12px;
-            padding: 20px;
-            transition: 0.2s;
-        }
-
-        .card:hover {
-            transform: translateY(-3px);
-        }
-
-        .ok {
-            border-left: 6px solid #2ecc71;
-        }
-
-        .bad {
-            border-left: 6px solid #e74c3c;
-        }
-
-        .service {
-            font-size: 22px;
-            margin-bottom: 10px;
-        }
-
-        .status {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-
-        a {
-            color: #4cc9f0;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .footer {
-            margin-top: 40px;
-            opacity: 0.6;
-            font-size: 14px;
-        }
-    </style>
+    }
+</style>
 </head>
 
 <body>
@@ -201,7 +270,7 @@ HTML = """
 </div>
 
 <div class="footer">
-    <p>Inception monitoring dashboard  • Docker • Nginx • MariaDB • WordPress • Redis• cAdvisor • Adminer • Flask</p>
+    <p>Inception monitoring dashboard  • Docker • Nginx • MariaDB • WordPress • Redis • cAdvisor • Adminer • Flask</p>
     <p>Created by oshcheho for 42 Inception project</p>
 </div>
 

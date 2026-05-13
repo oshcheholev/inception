@@ -44,23 +44,20 @@ services:
 # volumes:
 
 volumes:
+
   mariadb:
-    name: mariadb
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/${USER}/data/mariadb
 
   wordpress:
-    name: wordpress
-  # wordpress:
-  #   driver: local
-  #   driver_opts:
-  #     type: none
-  #     o: bind
-  #     device: ${HOME:-${USER}}/data/wordpress
-  # mariadb:
-  #   driver: local
-  #   driver_opts:
-  #     type: none
-  #     o: bind
-  #     device: ${HOME:-${USER}}/data/mariadb
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/${USER}/data/wordpress
 
 # networks:
 networks:

@@ -11,6 +11,7 @@ build:
 	@docker compose -f $(COMPOSE_FILE) build
 
 up:
+	@mkdir -p $(DATA_DIR)/wordpress $(DATA_DIR)/mariadb
 	@docker compose -f $(COMPOSE_FILE) up -d
 
 bonus:

@@ -47,6 +47,9 @@ HTML = """
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <title>Inception Monitoring Dashboard</title>
 
     <meta http-equiv="refresh" content="5">
@@ -65,11 +68,14 @@ HTML = """
             radial-gradient(circle at bottom right, #14213d 0%, transparent 35%),
             linear-gradient(135deg, #090b10, #111827);
         color: #f1f5f9;
-        font-family: "Inter", "Segoe UI", sans-serif;
+    font-family: "Montserrat", sans-serif;
     }
 
     h1 {
-        font-size: 42px;
+    font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+      font-size: 42px;
         margin-bottom: 12px;
         background: linear-gradient(90deg, #4cc9f0, #7b61ff);
         -webkit-background-clip: text;
@@ -78,6 +84,7 @@ HTML = """
     }
 
     .info {
+        font-family: "Montserrat", sans-serif;
         margin-bottom: 40px;
         color: #94a3b8;
         font-size: 16px;
@@ -85,12 +92,19 @@ HTML = """
     }
 
     .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 24px;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: center;
+        
+        gap: 14px;
     }
 
     .card {
+        width: 100%;
+        max-width: 600px;
+
         position: relative;
         overflow: hidden;
         background: rgba(22, 27, 34, 0.75);
@@ -144,6 +158,7 @@ HTML = """
         display: inline-flex;
         align-items: center;
         gap: 8px;
+        font-family: "Montserrat", sans-serif;
         font-size: 16px;
         padding: 8px 14px;
         border-radius: 999px;
